@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good morning</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="welcome">Good morningg, Diksha <3</h1>
+        <p class="intro">I hope this makes u smile</p>
+        <button class="reveal-btn" onclick="revealContent()">🎶Plug in your earbuds🎶</button>
+        <div id="daily-content" class="hidden">
+            <h2>Today's Song:</h2>
+            <div id="song-embed">
+                <div class="diksha-player">
+                    <span id="diksha-text">7:55AM</span>
+                    <button id="playPauseBtn">▶️</button>
+                </div>
+                <audio id="audioPlayer"></audio>
+            </div>
+            <p id="song-error" class="hidden">Oops, the song didn’t load. Try refreshing!</p>
+            <h2>Yk what...</h2>
+            <p id="message"></p>
+            <div id="assessment-question" class="hidden">
+                <p>Any assessment today?</p>
+                <button onclick="showAssessmentMessage(true)">Yes</button>
+                <button onclick="showAssessmentMessage(false)">No</button>
+            </div>
+            <p id="assessment-message" class="hidden"></p>
+        </div>
+        <div class="quote">
+            <p id="quote-text">This website is a little thing I made for you. Open it every day when you sit down on bus, it’ll play a nice song and drop a quick note to start your day. Since I know coming college isn't your most fav thing to do, I hope this brings a little smile to your face every morning</p>
+        </div>
+        <a href="https://wa.me/+918699272592" class="contact-btn">Did u get your fav seat today?</a>
+        <footer>from that bus guy</footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
