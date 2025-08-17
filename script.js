@@ -1,27 +1,9 @@
 const songs = [
-    "songs/1.mp3",
-    "songs/2.mp3",
-    "songs/3.mp3",
-    "songs/4.mp3",
-    "songs/5.mp3",
-    "songs/6.mp3",
-    "songs/7.mp3",
-    "songs/8.mp3",
-    "songs/9.mp3",
-    "songs/10.mp3",
-    "songs/11.mp3",
-    "songs/12.mp3",
-    "songs/13.mp3",
-    "songs/14.mp3",
-    "songs/15.mp3",
-    "songs/16.mp3",
-    "songs/17.mp3",
-    "songs/18.mp3",
-    "songs/19.mp3",
-    "songs/20.mp3",
-    "songs/21.mp3",
-    "songs/22.mp3",
-    "songs/23.mp3",
+    "songs/1.mp3", "songs/2.mp3", "songs/3.mp3", "songs/4.mp3", "songs/5.mp3",
+    "songs/6.mp3", "songs/7.mp3", "songs/8.mp3", "songs/9.mp3", "songs/10.mp3",
+    "songs/11.mp3", "songs/12.mp3", "songs/13.mp3", "songs/14.mp3", "songs/15.mp3",
+    "songs/16.mp3", "songs/17.mp3", "songs/18.mp3", "songs/19.mp3", "songs/20.mp3",
+    "songs/21.mp3", "songs/22.mp3", "songs/23.mp3", "songs/24.mp3"
 ];
 
 const messages = [
@@ -73,20 +55,21 @@ const messages = [
     "The world outside your window probably has no idea it’s being watched by such a pretty creature",
     "The seat is just a seat until you’re in it.",
     "The breeze will probably whisper something nice today.",
+    
 ];
 
 const allTheBestMessages = [
     "All the very best, you will ace it",
     "I hope that crazy woman gives u more than 26",
-    "Best of luckk",
+    "Best of luckk"
 ];
 
 const noAssessmentMessages = [
-    "Noice",
+    "Noice"
 ];
 
 const quotes = [
-    "Thank u for opening me today!!",
+    "Thank u for opening me today!!"
 ];
 
 function getRandomIndex(array) {
@@ -124,13 +107,15 @@ function revealContent() {
         const dikshaText = document.getElementById('diksha-text');
         const songEmbedDiv = document.getElementById('song-embed');
         const songError = document.getElementById('song-error');
+        const myFavsSection = document.getElementById('my-favs-section');
 
-        if (!audioPlayer || !playPauseBtn || !dikshaText || !songEmbedDiv) {
-            console.error('Missing audio elements:', {
+        if (!audioPlayer || !playPauseBtn || !dikshaText || !songEmbedDiv || !myFavsSection) {
+            console.error('Missing elements:', {
                 audioPlayer: !!audioPlayer,
                 playPauseBtn: !!playPauseBtn,
                 dikshaText: !!dikshaText,
-                songEmbed: !!songEmbedDiv
+                songEmbed: !!songEmbedDiv,
+                myFavsSection: !!myFavsSection
             });
             songError.classList.remove('hidden');
             return;
@@ -152,6 +137,7 @@ function revealContent() {
         document.getElementById('daily-content').classList.remove('hidden');
         document.getElementById('daily-content').classList.add('show');
         document.getElementById('assessment-question').classList.remove('hidden');
+        myFavsSection.classList.remove('hidden'); // Reveal My Favs section
 
         playPauseBtn.onclick = () => {
             if (audioPlayer.paused) {
@@ -168,16 +154,75 @@ function revealContent() {
         };
 
         function updateDikshaColor() {
+            const targetColor = { r: 0, g: 0, b: 0 }; // Black (adjust RGB)
+            const transitionSpeed = 0.1; // Adjust speed
+
             audioPlayer.addEventListener('timeupdate', () => {
-                const progress = audioPlayer.currentTime / audioPlayer.duration || 0;
-                const darkness = Math.min(1, progress); // 0 (light) to 1 (dark)
-                dikshaText.style.color = `rgba(255, 228, 225, ${1 - darkness})`;
+                if (!audioPlayer.paused) {
+                    const progress = audioPlayer.currentTime / audioPlayer.duration || 0;
+                    const startColor = { r: 255, g: 228, b: 225 };
+                    const r = Math.round(startColor.r - (startColor.r - targetColor.r) * progress * transitionSpeed);
+                    const g = Math.round(startColor.g - (startColor.g - targetColor.g) * progress * transitionSpeed);
+                    const b = Math.round(startColor.b - (startColor.b - targetColor.b) * progress * transitionSpeed);
+                    dikshaText.style.color = `rgb(${r}, ${g}, ${b})`;
+                }
             });
+
             audioPlayer.addEventListener('ended', () => {
-                dikshaText.style.color = 'rgba(29, 0, 37, 1)'; // Fully dark
+                dikshaText.style.color = `rgb(${targetColor.r}, ${targetColor.g}, ${targetColor.b})`;
                 playPauseBtn.textContent = '▶';
                 songEmbedDiv.classList.remove('playing');
             });
+
+            audioPlayer.addEventListener('pause', () => {
+                if (audioPlayer.currentTime > 0) {
+                    const progress = audioPlayer.currentTime / audioPlayer.duration || 0;
+                    const startColor = { r: 255, g: 228, b: 225 };
+                    const r = Math.round(startColor.r - (startColor.r - targetColor.r) * progress * transitionSpeed);
+                    const g = Math.round(startColor.g - (startColor.g - targetColor.g) * progress * transitionSpeed);
+                    const b = Math.round(startColor.b - (startColor.b - targetColor.b) * progress * transitionSpeed);
+                    dikshaText.style.color = `rgb(${r}, ${g}, ${b})`;
+                }
+            });
         }
     }, 1000);
+}
+
+// Populate My Favs section
+const favSongsSection = document.getElementById('my-favs-section');
+const favSongsContainer = document.getElementById('fav-songs');
+if (favSongsSection && favSongsContainer) {
+    const favoriteSongs = [
+        "songs/a.mp3",
+        "songs/b.mp3",
+        "songs/c.mp3",
+        "songs/d.mp3",
+        "songs/e.mp3" // Just song paths, no images
+    ];
+    favoriteSongs.forEach((song, index) => {
+        const songDiv = document.createElement('div');
+        songDiv.className = 'fav-song';
+        const playBtn = document.createElement('button');
+        playBtn.textContent = '▶';
+        const songLabel = document.createElement('span');
+        songLabel.textContent = 'Play mee';
+        songDiv.appendChild(playBtn);
+        songDiv.appendChild(songLabel);
+        favSongsContainer.appendChild(songDiv);
+
+        playBtn.onclick = () => {
+            const audio = new Audio(song);
+            audio.play().catch(error => console.error('Play error:', error));
+            playBtn.textContent = '⏸';
+            playBtn.onclick = () => {
+                audio.pause();
+                playBtn.textContent = '▶';
+                playBtn.onclick = () => {
+                    audio.play().catch(error => console.error('Play error:', error));
+                    playBtn.textContent = '⏸';
+                };
+            };
+        };
+    });
+    // Do not remove 'hidden' here, it’s handled in revealContent()
 }

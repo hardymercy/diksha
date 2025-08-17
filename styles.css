@@ -189,3 +189,61 @@ footer {
     #playPauseBtn { width: 32px; height: 32px; font-size: 16px; }
 }
 
+#my-favs-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(96, 13, 66, 0.7); /* Semi-transparent background */
+    border: 2px solid #FFE4E1;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+#my-favs-section h2 {
+    color: #c03d96;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.container-pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3; /* Subtle effect */
+    z-index: 0;
+}
+
+.fav-song {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.fav-song button {
+    background: #42042a;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    color: #FFE4E1;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.fav-song button:hover {
+    background: #530d3c;
+}
+
+.fav-song span {
+    color: #f1a8eb;
+    font-size: 1em;
+}
